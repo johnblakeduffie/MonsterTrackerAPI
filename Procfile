@@ -1,1 +1,1 @@
-web: gunicorn monstertracker.wsgi
+web: gunicorn crm1.wsgi

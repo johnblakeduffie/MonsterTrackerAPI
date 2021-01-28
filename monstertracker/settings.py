@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'plh48=!qi_z-tl6k2@bl$)c-u9#xk+9*5t58#!sszho_*p6)++'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','54.163.200.183']
+ALLOWED_HOSTS = ['localhost','54.163.200.183', 'monstertracker-api.herokuapp.com']
 
 
 #CORS_ORIGIN_WHITELIST = (
