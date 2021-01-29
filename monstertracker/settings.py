@@ -11,9 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
 import dj_database_url
-import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,21 +22,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'plh48=!qi_z-tl6k2@bl$)c-u9#xk+9*5t58#!sszho_*p6)++'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['localhost','54.163.200.183', 'monstertracker-api.herokuapp.com']
 
 
-#CORS_ORIGIN_WHITELIST = (
- #   'http://localhost:8080/'
-#)
-
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = ['https://monstertracker.herokuapp.com',"http://localhost:8080"]
 
 
+#
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'corsheaders',
     'rest_framework',
     'monstertracker'
 ]
@@ -60,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'monstertracker.urls'
@@ -94,8 +92,9 @@ WSGI_APPLICATION = 'monstertracker.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': dj_database_url.parse(config('DATABASE_URL'))
 }
+
 
 # db_from_env = dj_database_url.config(conn_max_age=600)
 # DATABASES['default'].update(db_from_env)
@@ -139,4 +138,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-django_heroku.settings(locals())
+
