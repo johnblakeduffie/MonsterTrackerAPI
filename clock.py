@@ -16,7 +16,7 @@ sched = BlockingScheduler()
 # def timed_job():
 #     print('This job is run every three minutes.')
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17, minute=40)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=16, minute=51)
 def scheduled_job():
 	with urlopen("https://rsbuddy.com/exchange/summary.json") as marketResponse:
 		marketSource = marketResponse.read()
