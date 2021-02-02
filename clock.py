@@ -6,7 +6,7 @@ import operator
 import requests
 from urllib.request import urlopen
 from osrsbox import monsters_api
-from collections import OrderedDict
+from collections import OrderedDict 
 from operator import getitem
 
 
@@ -16,7 +16,7 @@ sched = BlockingScheduler()
 # def timed_job():
 #     print('This job is run every three minutes.')
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17, minute=25)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17, minute=15)
 def scheduled_job():
 	with urlopen("https://rsbuddy.com/exchange/summary.json") as marketResponse:
 		marketSource = marketResponse.read()
