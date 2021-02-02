@@ -16,13 +16,12 @@ sched = BlockingScheduler()
 # def timed_job():
 #     print('This job is run every three minutes.')
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=16, minute=35)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17, minute=15)
 def scheduled_job():
 	with urlopen("https://rsbuddy.com/exchange/summary.json") as marketResponse:
 		marketSource = marketResponse.read()
 		marketDict = json.loads(marketSource)
 	monsterDict = monsters_api.load()
-
 	monsters = []
 	monsterProfitList = []
 	sorted_monsterProfitDict = {}
@@ -54,6 +53,6 @@ def scheduled_job():
 		else:
 			print("Invalid serializer: ")
 
-    print('This job is run every weekday at 3:35pm.')
+	print('This job is run every weekday at 4:15pm.')
 
 sched.start()
