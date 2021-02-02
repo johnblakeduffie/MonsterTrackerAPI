@@ -1,6 +1,6 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
-from .monstertracker.serializers import MonsterSerializer, ProfitSerializer, DropSerializer, MonsterListSerializer
-from .monstertracker.models import Monster, Drop, MonsterList
+from monstertracker.serializers import MonsterSerializer, ProfitSerializer, DropSerializer, MonsterListSerializer
+from monstertracker.models import Monster, Drop, MonsterList
 import json
 import operator
 import requests
@@ -16,7 +16,7 @@ sched = BlockingScheduler()
 # def timed_job():
 #     print('This job is run every three minutes.')
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=16, minute=58)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17, minute=5)
 def scheduled_job():
 	with urlopen("https://rsbuddy.com/exchange/summary.json") as marketResponse:
 		marketSource = marketResponse.read()
