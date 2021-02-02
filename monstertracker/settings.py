@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'monstertracker',
-    'django_apscheduler'
+    'monstertracker'
+    #'apscheduler'
 ]
 
 MIDDLEWARE = [
