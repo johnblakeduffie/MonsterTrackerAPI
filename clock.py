@@ -10,13 +10,47 @@ from collections import OrderedDict
 from operator import getitem
 
 
+def retrievePrice(drop, marketDict):
+	sell_average = 0
+	if drop == "Coins":
+		sell_average = 1
+	else:
+		for item in marketDict:
+			item_id = item
+			if marketDict[item_id]["name"] == drop:
+				sell_average = marketDict[item_id]["sell_average"]
+	return sell_average
+
+def addToDropList(drop, sell_average):
+	grossIncomePerKill = 0
+	try:
+		quantity = drop.quantity
+		rarity = drop.rarity
+		rolls = drop.rolls
+		quantityAvg = 0.0
+		if quantity.find('-') != -1:
+			quantityRange = quantity.split('-')
+			quantityAvg = (int(quantityRange[0]) + int(quantityRange[1])) / 2
+		else:
+			quantityAvg = int(quantity)
+		grossIncomePerKill += rarity * float(sell_average) * quantityAvg * rolls
+	except:
+		grossIncomePerKill += 0
+	updatedDrop = {'name' : drop.name, 'rarity' : rarity, 'sellAvg' : sell_average, 'quantityAvg' : quantityAvg, 'rolls' : rolls, 'grossIncomePerKill' : grossIncomePerKill}
+	return updatedDrop
+
+def updateDropList(name, rarity, rolls, quantityAvg, sell_average):
+	grossIncomePerKill = 0
+	try:
+		grossIncomePerKill += rarity * float(sell_average) * quantityAvg * rolls
+	except:
+		grossIncomePerKill += 0
+	updatedDrop = {'name' : name, 'rarity' : rarity, 'sellAvg' : sell_average, 'quantityAvg' : quantityAvg, 'rolls' : rolls, 'grossIncomePerKill' : grossIncomePerKill}
+	return updatedDrop
+
 sched = BlockingScheduler()
 
-# @sched.scheduled_job('interval', minutes=10)
-# def timed_job():
-#     print('This job is run every three minutes.')
-
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=16, minute=51)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=20, minute=9)
 def scheduled_job():
 	with urlopen("https://rsbuddy.com/exchange/summary.json") as marketResponse:
 		marketSource = marketResponse.read()
@@ -29,8 +63,6 @@ def scheduled_job():
 	sep = '('
 
 	for monster in monsterDict:
-		#If monster hasn't already been added, and if the monster drops are not empty
-		#if monster.wiki_name not in monsters and monster.drops:
 		name = monster.wiki_name.split(sep, 1)[0]
 		if name not in monsters and monster.duplicate == False and monster.drops:
 			monsters.append(name)
@@ -52,7 +84,5 @@ def scheduled_job():
 			serializer.save()
 		else:
 			print("Invalid serializer: ")
-
-	#print('This job is run every weekday at xx:xxpm.')
 
 sched.start()
