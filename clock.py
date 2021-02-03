@@ -50,7 +50,7 @@ def updateDropList(name, rarity, rolls, quantityAvg, sell_average):
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=20, minute=9)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=12)
 def scheduled_job():
 	with urlopen("https://rsbuddy.com/exchange/summary.json") as marketResponse:
 		marketSource = marketResponse.read()
