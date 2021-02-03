@@ -13,4 +13,4 @@ Currently this API is hosted through heroku free tier, so I am constrained to a 
 
 # Current Problems:
 
-Because the OSBuddy API returns only price from things sold in the last 5 min, I will need to 
+Because the OSBuddy API returns only price from things sold in the last 5 min, so very rare/expensive items are left out in the calculation
